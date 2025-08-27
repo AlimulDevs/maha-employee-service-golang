@@ -31,7 +31,7 @@ jobs:
         docker_io_token: ${{ secrets.DOCKER_IO_TOKEN }}
         docker_io_user: ${{ secrets.DOCKER_IO_USER }}
 
-    # - name: Deploy to VPS using SSH Password
+    # - name: Deploy to VPS using SSH Passwords
     #   run: |
     #     sshpass -p "${{ secrets.VPS_SSH_PASSWORD }}" ssh -p 22 -o StrictHostKeyChecking=no "${{ secrets.VPS_USERNAME }}"@"${{ secrets.VPS_IP }}" << 'EOF'
     #       cd /home/apps/docker-runner/web-dummy-code-runner   # Sesuaikan dengan path apliskasi
