@@ -2,6 +2,7 @@ package routes
 
 import (
 	"api/app/controller"
+	"api/app/controller/attendance"
 	"api/app/controller/branch"
 	"api/app/controller/department"
 	"api/app/middleware"
@@ -44,5 +45,8 @@ func Handle(app *fiber.App) {
 	api.Get("branch/children/parent/:parent_code", middleware.TokenValidator(), branch.GetBranchChildrenByParent)
 
 	api.Get("branch/:branch_code/detail", middleware.TokenValidator(), branch.GetBranchDetailByCode)
+
+	api.Get("attendance", middleware.TokenValidator(), attendance.GetAttendance)
+	api.Get("attendance/:id", middleware.TokenValidator(), attendance.GetAttendanceID)
 
 }
