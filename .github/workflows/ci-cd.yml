@@ -22,7 +22,7 @@ jobs:
     - name: Install sshpass
       run: sudo apt-get install -y sshpass
     
-    - name: Build and publish a Docker image for alimuldev/web-dummy-code
+    - name: Build and publish a Docker image for alimuldev/employee-maha-service
       uses: macbre/push-to-ghcr@master
       with:
         image_name: alimuldev/employee-maha-service 
