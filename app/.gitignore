@@ -1,0 +1,15 @@
+/*
+*.*
+!*.go
+
+!/config/
+!/controller/
+!/utils/
+!/lib/
+!/middleware/
+!/migrations/
+!/model/
+!/routes/
+!/services/
+!/thirdparty/
+!/.gitignore

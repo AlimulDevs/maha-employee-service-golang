@@ -1,0 +1,671 @@
+{
+    "schemes": [
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "API Documentation",
+        "title": "User Services",
+        "termsOfService": "https://dospecs.monstercode.net/en/guide/tnc.html",
+        "contact": {
+            "name": "Developer",
+            "email": "developer@mail.com"
+        },
+        "version": "1.0.0"
+    },
+    "host": "localhost:9090",
+    "basePath": "/api/v1/user",
+    "paths": {
+        "/": {
+            "get": {
+                "description": "show basic response",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "API"
+                ],
+                "summary": "show basic response",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "not found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "internal error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/department": {
+            "get": {
+                "security": [
+                    {
+                        "TokenKey": []
+                    }
+                ],
+                "description": "Retrieve a paginated list of Department from the database. You can specify the page number, number of records per page, sorting order, and apply custom filters to refine the results. \u003c/br\u003eBy default, the first page is returned with 10 records per page. You can also specify which fields to include in the response for better performance.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Department (Department)"
+                ],
+                "summary": "List of Department (Department)",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page number starting from zero. Default is 0.",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Number of records per page. Default is 10.",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort by a specific field. Prefix with a dash (`-`) for descending order, e.g., `-name`.",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Comma-separated list of specific fields to include in the response.",
+                        "name": "fields",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Custom filters for querying data. See [filter format documentation](https://github.com/morkid/paginate#filter-format) for more details.",
+                        "name": "filters",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated list of Department",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/lib.BaseResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/lib.Page"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "items": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/model.Department"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request: Invalid parameters provided.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found: No Department matched the query.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error: Unexpected error occurred.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "TokenKey": []
+                    }
+                ],
+                "description": "Create a new Department by providing the required data. If the Department is successfully created, a `201` response with the created Department data will be returned. In case of errors, appropriate error messages will be returned, such as invalid input data or conflicts.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Department (Department)"
+                ],
+                "summary": "Create new Department (Department)",
+                "parameters": [
+                    {
+                        "description": "Department data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.DepartmentRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created Department data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Department"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request: Invalid parameters provided.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict: The Department is in use or cannot be created due to a conflict.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error: Unexpected error occurred.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/department/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "TokenKey": []
+                    }
+                ],
+                "description": "Retrieve detailed information of a specific Department using its unique ID. If the Department with the given ID is found, the Department's data is returned. \u003c/br\u003eIf no Department is found for the provided ID, a '404' error response is returned indicating the Department was not found.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Department (Department)"
+                ],
+                "summary": "Get an Department by ID (Department))",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Department ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Department data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Department"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request: Invalid parameters provided.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found: No Department matched the query.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error: Unexpected error occurred.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "TokenKey": []
+                    }
+                ],
+                "description": "Update an existing Department using its unique ID. Provide the new data for the Department, and if the update is successful, the updated Department's data will be returned. \u003c/br\u003eIf the Department does not exist or there is a conflict during the update, appropriate error responses will be provided.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Department (Department)"
+                ],
+                "summary": "Update Department by id (Department)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Department ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Department data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.DepartmentRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Updated Department data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Department"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request: Invalid parameters provided.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found: No Department matched the provided ID.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict: The Department is in use or cannot be updated due to a conflict.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error: Unexpected error occurred.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "TokenKey": []
+                    }
+                ],
+                "description": "Delete an Department record based on its unique ID. If the Department is found, it will be removed from the database. \u003c/br\u003eIf the Department does not exist, an error response will be returned. If there is a conflict preventing deletion, an appropriate error message will be provided.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Department (Department)"
+                ],
+                "summary": "Delete Department by id (Department)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Department ID - The unique identifier of the Department to be deleted",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful deletion of Department",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request: Invalid parameters provided.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found: No Department found with the provided ID.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict: The Department is in use or cannot be deleted due to a conflict.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error: Unexpected error occurred.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/info.json": {
+            "get": {
+                "description": "show info response",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "API"
+                ],
+                "summary": "show info response",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "not found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "internal error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "lib.BaseResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "error": {},
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "lib.Page": {
+            "type": "object",
+            "properties": {
+                "first": {
+                    "description": "indicate first value",
+                    "type": "boolean",
+                    "example": true
+                },
+                "items": {
+                    "type": "object"
+                },
+                "last": {
+                    "description": "indicate last value",
+                    "type": "boolean",
+                    "example": false
+                },
+                "max_page": {
+                    "description": "maximum pages for current schema",
+                    "type": "integer",
+                    "example": 9
+                },
+                "page": {
+                    "description": "current page, start from zero",
+                    "type": "integer",
+                    "example": 0
+                },
+                "size": {
+                    "description": "size per page, default `10`",
+                    "type": "integer",
+                    "example": 10
+                },
+                "total": {
+                    "description": "total data without filters",
+                    "type": "integer",
+                    "example": 100
+                },
+                "total_pages": {
+                    "description": "total pages",
+                    "type": "integer",
+                    "example": 10
+                },
+                "visible": {
+                    "description": "current length",
+                    "type": "integer",
+                    "example": 10
+                }
+            }
+        },
+        "lib.Response": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "description": "response message",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "http status",
+                    "type": "integer"
+                }
+            }
+        },
+        "model.Department": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "department_code": {
+                    "type": "string"
+                },
+                "department_name": {
+                    "type": "string"
+                },
+                "gm_num": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_deleted": {
+                    "type": "boolean"
+                },
+                "is_sub": {
+                    "type": "integer"
+                },
+                "job_title": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.JobTitle"
+                    }
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.DepartmentRequest": {
+            "type": "object",
+            "properties": {
+                "department_code": {
+                    "type": "string"
+                },
+                "department_name": {
+                    "type": "string"
+                },
+                "gm_num": {
+                    "type": "integer"
+                },
+                "is_sub": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.JobTitle": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "daily_level": {
+                    "type": "integer"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "department_id": {
+                    "type": "integer"
+                },
+                "gm_num": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_daily": {
+                    "type": "integer"
+                },
+                "is_deleted": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "integer"
+                },
+                "sub_dept": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        },
+        "TokenKey": {
+            "type": "apiKey",
+            "name": "x-Token",
+            "in": "header"
+        }
+    }
+}

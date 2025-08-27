@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - "/Applications/project/maha/backend/user-service/nginx/nginx.conf:/etc/nginx/nginx.conf:ro"
+    depends_on:
+      - employee-service
+    networks:
+      - mahanetwork  # Tentukan jaringan yang digunakan oleh Nginx
+
+  employee-service:
+    build: .
+    container_name: employee-service
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ID=6A6EF734-F557-4F7E-9C2A-32CD28E43420
+      - APP_VERSION=v1.0.0
+      - APP_NAME=Master Service
+      - APP_DESCRIPTION=
+      - PORT=8000
+      - ENDPOINT=/api/v1/employee
+      - ENVIRONMENT=development
+      - DB_HOST=150.109.93.190
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASS=alimul130502
+      - DB_NAME=hrisapps_employee
+      - DB_TABLE_PREFIX=
+      - PREFORK=false
+      - HEADER_TOKEN_KEY=x-Token
+      - VALUE_TOKEN_KEY=secret123
+      - DB_TIMEZONE=Asia/Jakarta
+    networks:
+      - mahanetwork  # Tentukan jaringan yang digunakan oleh employee-service
+
+
+networks:
+  mahanetwork:  # Definisikan jaringan baru
+    driver: bridge  # Gunakan driver bridge untuk jaringan lokal

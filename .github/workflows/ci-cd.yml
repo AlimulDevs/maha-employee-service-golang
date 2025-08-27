@@ -1,0 +1,43 @@
+name: CI/CD Dummy Code
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+
+
+    - name: Install sshpass
+      run: sudo apt-get install -y sshpass
+    
+    - name: Build and publish a Docker image for alimuldev/web-dummy-code
+      uses: macbre/push-to-ghcr@master
+      with:
+        image_name: alimuldev/web-dummy-code 
+        image_tag: v1.1
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        docker_io_token: ${{ secrets.DOCKER_IO_TOKEN }}
+        docker_io_user: ${{ secrets.DOCKER_IO_USER }}
+
+    - name: Deploy to VPS using SSH Password
+      run: |
+        sshpass -p "${{ secrets.VPS_SSH_PASSWORD }}" ssh -p 22 -o StrictHostKeyChecking=no "${{ secrets.VPS_USERNAME }}"@"${{ secrets.VPS_IP }}" << 'EOF'
+          cd /home/apps/docker-runner/web-dummy-code-runner   # Sesuaikan dengan path apliskasi
+          docker compose pull dummy-code-web                        # Pull update dari GitHub
+          docker compose down -v
+          docker compose up -d
+        EOF
+      env:
+        VPS_SSH_PASSWORD: ${{ secrets.VPS_SSH_PASSWORD }}
