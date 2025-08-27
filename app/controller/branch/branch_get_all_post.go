@@ -39,7 +39,7 @@ func PostBranchGetAll(c *fiber.Ctx) error {
 	}
 
 	response := lib.BaseResponse{
-		Status:  "success",
+		Status:  "success test",
 		Code:    200,
 		Message: "OK",
 		Data:    data,
