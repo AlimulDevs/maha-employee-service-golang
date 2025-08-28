@@ -56,42 +56,22 @@ type EmployeeResponse struct {
 }
 
 type Branch struct {
-	ID               int64       `json:"id"`
-	BranchCode       string      `json:"branch_code"`
-	BranchLetterCode string      `json:"branch_letter_code"`
-	BranchName       string      `json:"branch_name"`
-	BranchTime       string      `json:"branch_time"`
-	BranchLocation   string      `json:"branch_location"`
-	BranchRadius     int64       `json:"branch_radius"`
-	IsProject        int64       `json:"is_project"`
-	IsSub            int64       `json:"is_sub"`
-	BranchParentCode interface{} `json:"branch_parent_code"`
-	Meal             int64       `json:"meal"`
-	IsActive         int64       `json:"is_active"`
-	IsDeleted        int64       `json:"is_deleted"`
-	DeletedAt        interface{} `json:"deleted_at"`
+	ID               int64  `json:"id"`
+	BranchCode       string `json:"branch_code"`
+	BranchLetterCode string `json:"branch_letter_code"`
+	BranchName       string `json:"branch_name"`
+	BranchTime       string `json:"branch_time"`
 }
 
 type Department struct {
-	ID             int64       `json:"id"`
-	DepartmentCode string      `json:"department_code"`
-	DepartmentName string      `json:"department_name"`
-	IsSub          int64       `json:"is_sub"`
-	GmNum          int64       `json:"gm_num"`
-	IsDeleted      int64       `json:"is_deleted"`
-	DeletedAt      interface{} `json:"deleted_at"`
+	ID             int64  `json:"id"`
+	DepartmentCode string `json:"department_code"`
+	DepartmentName string `json:"department_name"`
 }
 
 type JobTitle struct {
-	ID            int64       `json:"id"`
-	Name          string      `json:"name"`
-	DepartmentID  int64       `json:"department_id"`
-	SubDept       interface{} `json:"sub_dept"`
-	Role          int64       `json:"role"`
-	GmNum         interface{} `json:"gm_num"`
-	IsDaily       int64       `json:"is_daily"`
-	DailyLevel    int64       `json:"daily_level"`
-	IsDeleted     int64       `json:"is_deleted"`
-	DeletedAt     interface{} `json:"deleted_at"`
-	TotalEmployee int64       `json:"total_employee"`
+	ID            int64  `json:"id"`
+	Name          string `json:"name"`
+	DepartmentID  int64  `json:"department_id"`
+	TotalEmployee int64  `json:"total_employee"`
 }
