@@ -5,6 +5,7 @@ import (
 	bankcontroller "api/app/controller/bankController"
 	"api/app/controller/branchController"
 	"api/app/controller/departmentController"
+	"api/app/controller/jobTitleController"
 
 	"api/app/middleware"
 
@@ -44,5 +45,9 @@ func Handle(app *fiber.App) {
 
 	api.Get("department", middleware.TokenValidator(), departmentController.GetDepartment)
 	api.Get("department/:code", middleware.TokenValidator(), departmentController.GetDepartmentByCode)
+
+	api.Get("job-title", middleware.TokenValidator(), jobTitleController.GetJobTitle)
+	api.Get("job-title/:id", middleware.TokenValidator(), jobTitleController.GetJobTitleById)
+	api.Get("job-title/department/:department_id", middleware.TokenValidator(), jobTitleController.GetJobTitleByDepartment)
 
 }
