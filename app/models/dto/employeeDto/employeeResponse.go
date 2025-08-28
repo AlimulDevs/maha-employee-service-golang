@@ -5,14 +5,14 @@ import (
 )
 
 type EmployeeResponse struct {
-	ID                       uint64      `json:"id"`
-	Nik                      string      `json:"nik"`
-	Fullname                 string      `json:"fullname"`
-	Email                    string      `json:"email"`
-	JobTitleID               int         `json:"job_title_id"`
-	PhoneNumber              string      `json:"phone_number"`
-	Photo                    string      `json:"photo"`
-	PhotoEmbedding           string      `json:"photo_embedding"`
+	ID          uint64 `json:"id"`
+	Nik         string `json:"nik"`
+	Fullname    string `json:"fullname"`
+	Email       string `json:"email"`
+	JobTitleID  int    `json:"job_title_id"`
+	PhoneNumber string `json:"phone_number"`
+	Photo       string `json:"photo"`
+	// PhotoEmbedding           string      `json:"photo_embedding"`
 	DepartmentID             int         `json:"department_id"`
 	BranchCode               string      `json:"branch_code"`
 	Password                 string      `json:"password"`
