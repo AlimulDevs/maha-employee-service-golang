@@ -12,7 +12,7 @@ var Environment = map[string]interface{}{
 	"db_host":            "210.87.90.225",
 	"db_port":            3306,
 	"db_user":            "mahaku_root",
-	"db_pass":            "alimul130502",
+	"db_pass":            "pbs~5VvGzUYv",
 	"db_name":            "mahaku_hris_employee",
 	"db_attendance_name": "mahaku_hris_attendance",
 	"db_table_prefix":    "",
