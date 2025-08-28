@@ -6,7 +6,7 @@ import (
 
 type JobTitleModel struct {
 	ID           *int64     `json:"id"`
-	Name         string     `json:"name"`
+	Name         *string    `json:"name"`
 	DepartmentID *int64     `json:"department_id"`
 	SubDept      *int       `json:"sub_dept"`
 	Role         *int64     `json:"role"`

@@ -8,7 +8,6 @@ import (
 	"api/app/services"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/jinzhu/copier"
 )
 
 func GetEmployee(c *fiber.Ctx) error {
@@ -23,7 +22,10 @@ func GetEmployee(c *fiber.Ctx) error {
 	if err != nil {
 		return lib.ErrorNotFound(c)
 	}
-	copier.Copy(&dto, &model)
+	// copier.Copy(&dto, &model)
+	for _, dt := range model {
+		dto = append(dto, employeeDto.ToEmployeeGetAll(dt))
+	}
 
 	response := lib.BaseResponse{
 		Status:  "success",
