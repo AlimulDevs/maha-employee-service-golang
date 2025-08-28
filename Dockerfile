@@ -1,13 +1,13 @@
-FROM golang:1.23.0 AS builder
+FROM golang:1.23.0
 
-WORKDIR /go/src/api
+WORKDIR /app
+
+COPY go.mod ./
+
+RUN go mod download
 
 COPY . .
 
-RUN go mod tidy
-RUN go build -o /app/main .
+RUN go build -o main .
 
-FROM debian:bookworm-slim
-WORKDIR /root/
-COPY --from=builder /app/main .
 CMD ["./main"]
