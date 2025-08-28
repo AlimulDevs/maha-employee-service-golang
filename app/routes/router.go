@@ -2,10 +2,9 @@ package routes
 
 import (
 	"api/app/controller"
-	"api/app/controller/attendance"
 	bankcontroller "api/app/controller/bankController"
-	"api/app/controller/branch"
-	"api/app/controller/department"
+	"api/app/controller/branchController"
+
 	"api/app/middleware"
 
 	"api/app/lib"
@@ -33,23 +32,13 @@ func Handle(app *fiber.App) {
 	api.Get("/", controller.GetAPIIndex)
 	api.Get("/info.json", controller.GetAPIInfo)
 
-	api.Post("department", middleware.TokenValidator(), department.PostDepartment)
-	api.Get("department", middleware.TokenValidator(), department.GetDepartment)
-	api.Get("department/:id", middleware.TokenValidator(), department.GetDepartmentID)
-	api.Put("department/:id", middleware.TokenValidator(), department.PutDepartment)
-	api.Delete("department/:id", middleware.TokenValidator(), department.DeleteDepartment)
-
-	api.Post("branch", middleware.TokenValidator(), branch.PostBranch)
-	api.Post("branch/get-all", middleware.TokenValidator(), branch.PostBranchGetAll)
-	api.Get("branch", middleware.TokenValidator(), branch.GetBranchParent)
-	api.Get("branch/children", middleware.TokenValidator(), branch.GetBranchChildren)
-	api.Get("branch/children/parent/:parent_code", middleware.TokenValidator(), branch.GetBranchChildrenByParent)
-
-	api.Get("branch/:branch_code/detail", middleware.TokenValidator(), branch.GetBranchDetailByCode)
-
-	api.Get("attendance", middleware.TokenValidator(), attendance.GetAttendance)
-	api.Get("attendance/:id", middleware.TokenValidator(), attendance.GetAttendanceID)
+	api.Post("branch/get-all", middleware.TokenValidator(), branchController.PostBranchGetAll)
+	api.Get("branch", middleware.TokenValidator(), branchController.GetBranchParent)
+	api.Get("branch/children", middleware.TokenValidator(), branchController.GetBranchChildren)
+	api.Get("branch/children/parent/:parent_code", middleware.TokenValidator(), branchController.GetBranchChildrenByParent)
+	api.Get("branch/:branch_code/detail", middleware.TokenValidator(), branchController.GetBranchDetailByCode)
 
 	api.Get("bank", middleware.TokenValidator(), bankcontroller.GetBank)
+	api.Get("bank/:id", middleware.TokenValidator(), bankcontroller.GetBankById)
 
 }
