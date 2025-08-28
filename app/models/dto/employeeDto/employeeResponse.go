@@ -56,7 +56,7 @@ type EmployeeResponse struct {
 	BpjsContributionWages    string     `json:"bpjs_contribution_wages"`
 	JobTitle                 JobTitle   `json:"job_title"`
 	Department               Department `json:"department"`
-	Branch                   Branch     `json:"branch"`
+	Branch                   *Branch    `json:"branch"`
 }
 
 func ToEmployeeGetAll(model employeeModel.EmployeeModel) EmployeeResponse {
