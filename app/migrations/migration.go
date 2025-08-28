@@ -1,9 +1,4 @@
 package migrations
 
-import "api/app/model"
-
 // ModelMigrations models to automigrate
-var ModelMigrations = []interface{}{
-	&model.Branch{},
-	&model.Department{},
-}
+var ModelMigrations = []interface{}{}

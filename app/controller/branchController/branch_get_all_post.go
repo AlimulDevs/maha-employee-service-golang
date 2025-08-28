@@ -2,7 +2,6 @@ package branchController
 
 import (
 	"api/app/lib"
-	"api/app/model"
 	"api/app/models/dto/branchDto"
 	"api/app/models/model/branchModel"
 	"api/app/services"
@@ -20,7 +19,7 @@ func PostBranchGetAll(c *fiber.Ctx) error {
 
 	var data []branchModel.BranchModel
 
-	err := db.Model(&model.Branch{}).Where("is_active = ?", api.IsActive).Find(&data).Error
+	err := db.Model(&branchModel.BranchModel{}).Where("is_active = ?", api.IsActive).Find(&data).Error
 
 	if err != nil {
 		return lib.ErrorNotFound(c)
