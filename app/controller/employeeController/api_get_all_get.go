@@ -17,12 +17,24 @@ func GetEmployee(c *fiber.Ctx) error {
 
 	var dto []employeeDto.EmployeeResponse
 
-	err := db.Preload("JobTitle").Preload("Department").Preload("Branch").Find(&model).Error
+	status := c.Query("status")     // contoh: ?status=1
+	fullname := c.Query("fullname") // contoh: ?fullname=Jamal
 
+	query := db.Model(&employeeModel.EmployeeModel{}).Preload("JobTitle").Preload("Department").Preload("Branch")
+
+	if status != "" {
+		query = query.Where("status = ?", status)
+	}
+
+	if fullname != "" {
+		query = query.Where("fullname LIKE ?", "%"+fullname+"%")
+	}
+
+	err := query.Find(&model).Error
 	if err != nil {
 		return lib.ErrorNotFound(c)
 	}
-	// copier.Copy(&dto, &model)
+
 	for _, dt := range model {
 		dto = append(dto, employeeDto.ToEmployeeGetAll(dt))
 	}
