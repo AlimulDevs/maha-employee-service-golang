@@ -92,7 +92,7 @@ func GetEmployee(c *fiber.Ctx) error {
 	}
 
 	response := lib.BaseResponse{
-		Status:  "success",
+		Status:  "successs2",
 		Code:    200,
 		Message: "OK",
 		Data:    dto,
