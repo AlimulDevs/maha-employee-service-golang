@@ -59,6 +59,6 @@ func Handle(app *fiber.App) {
 	api.Get("employee", middleware.TokenValidator(), employeeController.GetEmployee)
 	api.Get("employee/:id", middleware.TokenValidator(), employeeController.GetEmployeeById)
 
-	api.Post("tes/get-by-employee-id", middleware.TokenValidator(), employeeNotifcationController.GetByEmployeeId)
+	api.Post("employee/employee-notification/get-by-employee-id", middleware.TokenValidator(), employeeNotifcationController.GetByEmployeeId)
 
 }
