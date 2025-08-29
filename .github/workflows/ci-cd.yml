@@ -47,6 +47,8 @@ jobs:
             docker compose pull employee-maha-service
             docker compose down -v employee-maha-service
             docker compose up -d employee-maha-service
+
+            docker image prune -af
           EOF
         env:
           VPS_SSH_PASSWORD: ${{ secrets.VPS_SSH_PASSWORD }}
