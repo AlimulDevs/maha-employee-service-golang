@@ -6,6 +6,7 @@ import (
 	"api/app/controller/branchController"
 	"api/app/controller/departmentController"
 	"api/app/controller/employeeController"
+	"api/app/controller/employeeNotifcationController"
 	"api/app/controller/jobTitleController"
 	"api/app/controller/workHourController"
 
@@ -57,5 +58,7 @@ func Handle(app *fiber.App) {
 
 	api.Get("employee", middleware.TokenValidator(), employeeController.GetEmployee)
 	api.Get("employee/:id", middleware.TokenValidator(), employeeController.GetEmployeeById)
+
+	api.Post("employee/employee-notification/get-by-employee-id", middleware.TokenValidator(), employeeNotifcationController.GetByEmployeeId)
 
 }
