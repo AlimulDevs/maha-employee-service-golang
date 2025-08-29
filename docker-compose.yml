@@ -36,7 +36,7 @@ services:
       - VALUE_TOKEN_KEY=secret123
       - DB_TIMEZONE=Asia/Jakarta
     networks:
-      - mahanetwork  # Tentukan jaringan yang digunakan oleh employee-service
+      - mahanetwork  # Tentukan jaringan yang digunakan oleh employee-servicew
 
 
 networks:
