@@ -4,7 +4,6 @@ import (
 	"api/app/lib"
 	"api/app/models/model/bankModel"
 	"api/app/models/model/employeeModel"
-	"fmt"
 	"strings"
 	"time"
 
@@ -123,13 +122,14 @@ type EmployeeGetByIDResponse struct {
 func ToEmployeeGetAll(model employeeModel.EmployeeModel) EmployeeResponse {
 	var photoURL string
 	if model.Photo != "" { // ganti ke field `Photo` kalau ada
-		url := fmt.Sprintf("https://employee-service.mahasejahtera.com/public/storage/%s", model.Photo)
-		photoURL = url
+
+		url := lib.GenerateEmployeeFileURL(&model.Photo)
+		photoURL = *url
 	}
 	var signatureURL string
 	if model.Signature != "" { // ganti ke field `Photo` kalau ada
-		url := fmt.Sprintf("https://employee-service.mahasejahtera.com/public/storage/%s", model.Signature)
-		signatureURL = url
+		url := lib.GenerateEmployeeFileURL(&model.Signature)
+		signatureURL = *url
 	}
 	var data EmployeeResponse
 
@@ -145,13 +145,13 @@ func ToEmployeeGetAll(model employeeModel.EmployeeModel) EmployeeResponse {
 func ToEmployeeGetById(model employeeModel.EmployeeModel) EmployeeGetByIDResponse {
 	var photoURL string
 	if model.Photo != "" { // ganti ke field `Photo` kalau ada
-		url := fmt.Sprintf("https://employee-service.mahasejahtera.com/public/storage/%s", model.Photo)
-		photoURL = url
+		url := lib.GenerateEmployeeFileURL(&model.Photo)
+		photoURL = *url
 	}
 	var signatureURL string
 	if model.Signature != "" { // ganti ke field `Photo` kalau ada
-		url := fmt.Sprintf("https://employee-service.mahasejahtera.com/public/storage/%s", model.Signature)
-		signatureURL = url
+		url := lib.GenerateEmployeeFileURL(&model.Signature)
+		signatureURL = *url
 	}
 	var data EmployeeGetByIDResponse
 
