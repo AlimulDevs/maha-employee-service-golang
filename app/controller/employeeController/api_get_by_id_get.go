@@ -18,14 +18,21 @@ func GetEmployeeById(c *fiber.Ctx) error {
 
 	var model employeeModel.EmployeeModel
 
-	var dto employeeDto.EmployeeResponse
+	var dto employeeDto.EmployeeGetByIDResponse
 
-	err := db.Where("id = ?", id).First(&model).Error
+	err := db.Where("id = ?", id).
+		Preload("JobTitle").
+		Preload("Branch").
+		Preload("Department").
+		Preload("EmployeeEducation").
+		Preload("EmployeeSkill").
+		Preload("EmployeeContract.ContractJobdesk").
+		First(&model).Error
 
 	if err != nil {
 		return lib.ErrorNotFound(c)
 	}
-	copier.Copy(&dto, &model)
+	copier.Copy(&dto, employeeDto.ToEmployeeGetById(model))
 
 	response := lib.BaseResponse{
 		Status:  "success",

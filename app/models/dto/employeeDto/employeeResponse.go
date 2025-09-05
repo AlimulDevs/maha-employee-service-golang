@@ -4,6 +4,7 @@ import (
 	"api/app/lib"
 	"api/app/models/model/employeeModel"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/jinzhu/copier"
@@ -58,6 +59,58 @@ type EmployeeResponse struct {
 	Department               Department `json:"department"`
 	Branch                   *Branch    `json:"branch"`
 }
+type EmployeeGetByIDResponse struct {
+	ID                       int64                      `json:"id"`
+	Nik                      *string                    `json:"nik"`
+	Fullname                 string                     `json:"fullname"`
+	Email                    string                     `json:"email"`
+	EmailVerifiedAt          time.Time                  `json:"email_verified_at"`
+	JobTitleID               int64                      `json:"job_title_id"`
+	PhoneNumber              string                     `json:"phone_number"`
+	DepartmentID             int64                      `json:"department_id"`
+	BranchCode               string                     `json:"branch_code"`
+	IntegrityPactNum         int                        `json:"integrity_pact_num"`
+	IntegrityPactCheck       int64                      `json:"integrity_pact_check"`
+	IntegrityPactCheckDate   *time.Time                 `json:"integrity_pact_check_date"`
+	StatementLetterCheck     int64                      `json:"statement_letter_check"`
+	StatementLetterCheckDate *time.Time                 `json:"statement_letter_check_date"`
+	ContractID               *int64                     `json:"contract_id"`
+	OldContractID            *string                    `json:"old_contract_id"`
+	EmployeeStatus           string                     `json:"employee_status"`
+	Salary                   *string                    `json:"salary"`
+	PhotoEmbedding           string                     `json:"photo_embedding"`
+	ShowContract             int64                      `json:"show_contract"`
+	EmployeeLetterCode       *string                    `json:"employee_letter_code"`
+	BiodataConfirm           int64                      `json:"biodata_confirm"`
+	BiodataConfirmDate       *time.Time                 `json:"biodata_confirm_date"`
+	CurrentAddress           string                     `json:"current_address"`
+	BankAccountNumber        string                     `json:"bank_account_number"`
+	RoleID                   int                        `json:"role_id"`
+	Status                   int                        `json:"status"`
+	StatementRejected        *string                    `json:"statement_rejected"`
+	IsDaily                  int64                      `json:"is_daily"`
+	IsFlexibleAbsent         int64                      `json:"is_flexible_absent"`
+	FlexibleAbsentEndDate    string                     `json:"flexible_absent_end_date"`
+	IsOvertime               int64                      `json:"is_overtime"`
+	OvertimeLimit            *int                       `json:"overtime_limit"`
+	DeviceToken              *string                    `json:"device_token"`
+	CreatedAt                time.Time                  `json:"created_at"`
+	DeletedAt                *string                    `json:"deleted_at"`
+	StartWork                *string                    `json:"start_work"`
+	PhotoURL                 string                     `json:"photo_url"`
+	SignatureURL             *string                    `json:"signature_url"`
+	StatusLabel              string                     `json:"status_label"`
+	IsBpjs                   bool                       `json:"is_bpjs"`
+	IsBpjsContribution       bool                       `json:"is_bpjs_contribution"`
+	BpjsWages                string                     `json:"bpjs_wages"`
+	BpjsContributionWages    string                     `json:"bpjs_contribution_wages"`
+	JobTitle                 JobTitle                   `json:"job_title"`
+	Department               Department                 `json:"department"`
+	Branch                   *Branch                    `json:"branch"`
+	EmployeeEducation        *EmployeeEducationResponse `json:"education"`
+	EmployeeSkill            *[]EmployeeSkillResponse   `json:"employee_skill"`
+	EmployeeContract         *EmployeeContractResponse  `json:"contract"`
+}
 
 func ToEmployeeGetAll(model employeeModel.EmployeeModel) EmployeeResponse {
 	var photoURL string
@@ -79,6 +132,51 @@ func ToEmployeeGetAll(model employeeModel.EmployeeModel) EmployeeResponse {
 	data.Salary = &salary
 	return data
 
+}
+func ToEmployeeGetById(model employeeModel.EmployeeModel) EmployeeGetByIDResponse {
+	var photoURL string
+	if model.Photo != "" { // ganti ke field `Photo` kalau ada
+		url := fmt.Sprintf("https://employee-service.mahasejahtera.com/public/storage/%s", model.Photo)
+		photoURL = url
+	}
+	var signatureURL string
+	if model.Signature != "" { // ganti ke field `Photo` kalau ada
+		url := fmt.Sprintf("https://employee-service.mahasejahtera.com/public/storage/%s", model.Signature)
+		signatureURL = url
+	}
+	var data EmployeeGetByIDResponse
+
+	copier.Copy(&data, &model)
+	data.PhotoURL = photoURL
+	data.SignatureURL = &signatureURL
+	salary := lib.FloatToStr(model.Salary)
+	data.Salary = &salary
+
+	data.EmployeeEducation.LastEducationMajor = *getLastEducationMajor(*model.EmployeeEducation)
+	return data
+
+}
+
+func getLastEducationMajor(edu employeeModel.EmployeeEducationModel) *string {
+	val := strings.ToLower(edu.LastEducation)
+	diplomaVal := []string{"d i", "d ii", "d iii"}
+
+	// cek diploma
+	for _, d := range diplomaVal {
+		if val == d {
+			return &edu.BachelorMajor
+		}
+	}
+
+	if val == "s1" {
+		return &edu.BachelorMajor
+	} else if val == "s2" {
+		return edu.MasterMajor
+	} else if val == "s3" {
+		return edu.DoctoralMajor
+	}
+
+	return nil
 }
 
 type Branch struct {

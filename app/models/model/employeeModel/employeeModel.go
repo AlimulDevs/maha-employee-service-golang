@@ -49,9 +49,13 @@ type EmployeeModel struct {
 	JobTitle                 *jobTitleModel.JobTitleModel     `json:"job_title" gorm:"foreignKey:JobTitleID;references:ID"`
 	Department               *departmentModel.DepartmentModel `json:"department" gorm:"foreignKey:DepartmentID;references:ID"`
 	Branch                   *branchModel.BranchModel         `json:"branch" gorm:"foreignKey:BranchCode;references:BranchCode"`
-	CreatedAt                *time.Time                       `json:"created_at"`
-	UpdatedAt                *time.Time                       `json:"updated_at"`
-	DeletedAt                *time.Time                       `json:"deleted_at"`
+	EmployeeContract         *EmployeeContractModel           `json:"contract" gorm:"foreignKey:EmployeeID;references:ID"`
+	EmployeeEducation        *EmployeeEducationModel          `json:"education" gorm:"foreignKey:EmployeeID;references:ID"`
+	EmployeeSkill            *[]EmployeeSkillModel            `json:"employee_skill" gorm:"foreignKey:EmployeeID;references:ID"`
+
+	CreatedAt *time.Time `json:"created_at"`
+	UpdatedAt *time.Time `json:"updated_at"`
+	DeletedAt *time.Time `json:"deleted_at"`
 }
 
 func (EmployeeModel) TableName() string {
