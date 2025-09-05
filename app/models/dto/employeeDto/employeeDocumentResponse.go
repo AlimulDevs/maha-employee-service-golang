@@ -23,79 +23,79 @@ type EmployeeDocumentResponse struct {
 }
 
 func ToEmployeeDocumentResponse(model employeeModel.EmployeeDocumentModel) EmployeeDocumentResponse {
-	var photoURL string
-	var KtpURL string
-	var kkURL string
-	var certificateURL string
-	var gradeTranscriptURL string
-	var certificateSkillURL string
-	var bankAccountURL string
-	var npwpURL string
-	var bpjsKtnURL string
-	var bpjsKesURL string
+	var photoURL *string
+	var KtpURL *string
+	var kkURL *string
+	var certificateURL *string
+	var gradeTranscriptURL *string
+	var certificateSkillURL *string
+	var bankAccountURL *string
+	var npwpURL *string
+	var bpjsKtnURL *string
+	var bpjsKesURL *string
 	if model.Photo != nil { // ganti ke field `Photo` kalau ada
 		url := fmt.Sprintf("https://employee-service.mahasejahtera.com/public/storage/%s", *model.Photo)
-		photoURL = url
+		photoURL = &url
 	}
 
 	if model.Ktp != nil { // ganti ke field `Photo` kalau ada
 		url := fmt.Sprintf("https://employee-service.mahasejahtera.com/public/storage/%s", *model.Ktp)
-		KtpURL = url
+		KtpURL = &url
 	}
 
 	if model.Kk != nil { // ganti ke field `Photo` kalau ada
 		url := fmt.Sprintf("https://employee-service.mahasejahtera.com/public/storage/%s", *model.Kk)
-		kkURL = url
+		kkURL = &url
 	}
 
 	if model.Certificate != nil { // ganti ke field `Photo` kalau ada
 		url := fmt.Sprintf("https://employee-service.mahasejahtera.com/public/storage/%s", *model.Certificate)
-		certificateURL = url
+		certificateURL = &url
 	}
 
 	if model.GradeTranscript != nil { // ganti ke field `Photo` kalau ada
 		url := fmt.Sprintf("https://employee-service.mahasejahtera.com/public/storage/%s", *model.GradeTranscript)
-		gradeTranscriptURL = url
+		gradeTranscriptURL = &url
 	}
 
 	if model.CertificateSkillURL != nil { // ganti ke field `Photo` kalau ada
 		url := fmt.Sprintf("https://employee-service.mahasejahtera.com/public/storage/%s", *model.CertificateSkillURL)
-		certificateSkillURL = url
+		certificateSkillURL = &url
 	}
 
 	if model.BankAccount != nil { // ganti ke field `Photo` kalau ada
 		url := fmt.Sprintf("https://employee-service.mahasejahtera.com/public/storage/%s", *model.BankAccount)
-		bankAccountURL = url
+		bankAccountURL = &url
 	}
 
 	if model.Npwp != nil { // ganti ke field `Photo` kalau ada
 		url := fmt.Sprintf("https://employee-service.mahasejahtera.com/public/storage/%s", *model.Npwp)
-		npwpURL = url
+		npwpURL = &url
 	}
 
 	if model.BpjsKtn != nil { // ganti ke field `Photo` kalau ada
 		url := fmt.Sprintf("https://employee-service.mahasejahtera.com/public/storage/%s", *model.BpjsKtn)
-		bpjsKtnURL = url
+		bpjsKtnURL = &url
 	}
 
 	if model.BpjsKes != nil { // ganti ke field `Photo` kalau ada
 		url := fmt.Sprintf("https://employee-service.mahasejahtera.com/public/storage/%s", *model.BpjsKes)
-		bpjsKesURL = url
+		bpjsKesURL = &url
 	}
 
 	var data EmployeeDocumentResponse
 
 	copier.Copy(&data, &model)
-	data.PhotoURL = &photoURL
-	data.KtpURL = &KtpURL
-	data.KkURL = &kkURL
-	data.CertificateURL = &certificateURL
-	data.GradeTranscriptURL = &gradeTranscriptURL
-	data.CertificateSkillURL = &certificateSkillURL
-	data.BankAccountURL = &bankAccountURL
-	data.NpwpURL = &npwpURL
-	data.BpjsKtnURL = &bpjsKtnURL
-	data.BpjsKesURL = &bpjsKesURL
+	data.PhotoURL = photoURL
+	data.KtpURL = KtpURL
+	data.KkURL = kkURL
+	data.CertificateURL = certificateURL
+	data.GradeTranscriptURL = gradeTranscriptURL
+	data.CertificateSkillURL = certificateSkillURL
+	data.BankAccountURL = bankAccountURL
+	data.NpwpURL = npwpURL
+	data.BpjsKtnURL = bpjsKtnURL
+	data.BpjsKesURL = bpjsKesURL
 
 	return data
 
