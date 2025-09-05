@@ -26,7 +26,12 @@ func GetEmployeeById(c *fiber.Ctx) error {
 		Preload("Department").
 		Preload("EmployeeEducation").
 		Preload("EmployeeSkill").
+		Preload("EmployeeBank.Bank").
 		Preload("EmployeeContract.ContractJobdesk").
+		Preload("EmployeeBiodata").
+		Preload("EmployeeFamily").
+		Preload("EmployeeWorkHour").
+		Preload("EmployeeDocument").
 		First(&model).Error
 
 	if err != nil {

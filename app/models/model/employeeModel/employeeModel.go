@@ -52,10 +52,14 @@ type EmployeeModel struct {
 	EmployeeContract         *EmployeeContractModel           `json:"contract" gorm:"foreignKey:EmployeeID;references:ID"`
 	EmployeeEducation        *EmployeeEducationModel          `json:"education" gorm:"foreignKey:EmployeeID;references:ID"`
 	EmployeeSkill            *[]EmployeeSkillModel            `json:"employee_skill" gorm:"foreignKey:EmployeeID;references:ID"`
-
-	CreatedAt *time.Time `json:"created_at"`
-	UpdatedAt *time.Time `json:"updated_at"`
-	DeletedAt *time.Time `json:"deleted_at"`
+	EmployeeBank             *EmployeeBankModel               `json:"employee_bank" gorm:"foreignKey:EmployeeID;references:ID"`
+	EmployeeBiodata          *EmployeeBiodataModel            `json:"biodata" gorm:"foreignKey:EmployeeID;references:ID"`
+	EmployeeFamily           *EmployeeFamilyModel             `json:"family" gorm:"foreignKey:EmployeeID;references:ID"`
+	EmployeeWorkHour         *EmployeeWorkHourModel           `json:"work_hour" gorm:"foreignKey:EmployeeID;references:ID"`
+	EmployeeDocument         *EmployeeDocumentModel           `json:"document" gorm:"foreignKey:EmployeeID;references:ID"`
+	CreatedAt                *time.Time                       `json:"created_at"`
+	UpdatedAt                *time.Time                       `json:"updated_at"`
+	DeletedAt                *time.Time                       `json:"deleted_at"`
 }
 
 func (EmployeeModel) TableName() string {
