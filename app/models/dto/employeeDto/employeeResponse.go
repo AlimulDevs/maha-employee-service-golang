@@ -29,35 +29,35 @@ type EmployeeResponse struct {
 	OldContractID            *string    `json:"old_contract_id"`
 	EmployeeStatus           string     `json:"employee_status"`
 	Salary                   *string    `json:"salary"`
-	PhotoEmbedding           string     `json:"photo_embedding"`
-	ShowContract             int64      `json:"show_contract"`
-	EmployeeLetterCode       *string    `json:"employee_letter_code"`
-	BiodataConfirm           int64      `json:"biodata_confirm"`
-	BiodataConfirmDate       *time.Time `json:"biodata_confirm_date"`
-	CurrentAddress           string     `json:"current_address"`
-	BankAccountNumber        string     `json:"bank_account_number"`
-	RoleID                   int        `json:"role_id"`
-	Status                   int        `json:"status"`
-	StatementRejected        *string    `json:"statement_rejected"`
-	IsDaily                  int64      `json:"is_daily"`
-	IsFlexibleAbsent         int64      `json:"is_flexible_absent"`
-	FlexibleAbsentEndDate    string     `json:"flexible_absent_end_date"`
-	IsOvertime               int64      `json:"is_overtime"`
-	OvertimeLimit            *int       `json:"overtime_limit"`
-	DeviceToken              *string    `json:"device_token"`
-	CreatedAt                time.Time  `json:"created_at"`
-	DeletedAt                *string    `json:"deleted_at"`
-	StartWork                *string    `json:"start_work"`
-	PhotoURL                 string     `json:"photo_url"`
-	SignatureURL             *string    `json:"signature_url"`
-	StatusLabel              string     `json:"status_label"`
-	IsBpjs                   bool       `json:"is_bpjs"`
-	IsBpjsContribution       bool       `json:"is_bpjs_contribution"`
-	BpjsWages                string     `json:"bpjs_wages"`
-	BpjsContributionWages    string     `json:"bpjs_contribution_wages"`
-	JobTitle                 JobTitle   `json:"job_title"`
-	Department               Department `json:"department"`
-	Branch                   *Branch    `json:"branch"`
+	// PhotoEmbedding           string     `json:"photo_embedding"`
+	ShowContract          int64      `json:"show_contract"`
+	EmployeeLetterCode    *string    `json:"employee_letter_code"`
+	BiodataConfirm        int64      `json:"biodata_confirm"`
+	BiodataConfirmDate    *time.Time `json:"biodata_confirm_date"`
+	CurrentAddress        string     `json:"current_address"`
+	BankAccountNumber     string     `json:"bank_account_number"`
+	RoleID                int        `json:"role_id"`
+	Status                int        `json:"status"`
+	StatementRejected     *string    `json:"statement_rejected"`
+	IsDaily               int64      `json:"is_daily"`
+	IsFlexibleAbsent      int64      `json:"is_flexible_absent"`
+	FlexibleAbsentEndDate string     `json:"flexible_absent_end_date"`
+	IsOvertime            int64      `json:"is_overtime"`
+	OvertimeLimit         *int       `json:"overtime_limit"`
+	DeviceToken           *string    `json:"device_token"`
+	CreatedAt             time.Time  `json:"created_at"`
+	DeletedAt             *string    `json:"deleted_at"`
+	StartWork             *string    `json:"start_work"`
+	PhotoURL              string     `json:"photo_url"`
+	SignatureURL          *string    `json:"signature_url"`
+	StatusLabel           string     `json:"status_label"`
+	IsBpjs                bool       `json:"is_bpjs"`
+	IsBpjsContribution    bool       `json:"is_bpjs_contribution"`
+	BpjsWages             string     `json:"bpjs_wages"`
+	BpjsContributionWages string     `json:"bpjs_contribution_wages"`
+	JobTitle              JobTitle   `json:"job_title"`
+	Department            Department `json:"department"`
+	Branch                *Branch    `json:"branch"`
 }
 type EmployeeGetByIDResponse struct {
 	ID                       int64      `json:"id"`
