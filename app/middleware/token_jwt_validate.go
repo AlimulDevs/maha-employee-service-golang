@@ -3,7 +3,6 @@ package middleware
 import (
 	"encoding/base64"
 	"fmt"
-	"strings"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -12,26 +11,15 @@ import (
 
 func VerifyTokenJwt() fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		authHeader := c.Get("Authorization")
-		if authHeader == "" {
+		// Ambil token langsung dari Authorization header (tanpa Bearer)
+		tokenString := c.Get("Authorization")
+		if tokenString == "" {
 			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{
 				"status":  "error",
 				"code":    403,
 				"message": "Unauthorized, token missing",
 			})
 		}
-
-		// Harus pakai format Bearer token
-		if !strings.HasPrefix(authHeader, "Bearer ") {
-			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{
-				"status":  "error",
-				"code":    403,
-				"message": "Invalid Authorization header format, must start with Bearer",
-			})
-		}
-
-		// Ambil token string
-		tokenString := strings.TrimPrefix(authHeader, "Bearer ")
 
 		// Parse dan validasi token
 		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
@@ -48,7 +36,6 @@ func VerifyTokenJwt() fiber.Handler {
 				}), nil
 			}
 			return secretBytes, nil
-
 		})
 
 		if err != nil {
