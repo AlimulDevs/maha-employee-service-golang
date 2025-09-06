@@ -60,7 +60,7 @@ func Handle(app *fiber.App) {
 	api.Get("employee/:id", middleware.TokenValidator(), employeeController.GetEmployeeById)
 	api.Get("employee/employee-signature/:id", middleware.TokenValidator(), employeeController.GetEmployeeSignatureById)
 	api.Get("employee/employee-fcm-token/:id", middleware.TokenValidator(), employeeController.GetEmployeeFcmTokenById)
-	api.Get("employee/employee-document/:id", middleware.VerifyTokenJwt(), employeeController.GetEmployeeDocumentById)
+	api.Get("employee/employee-document/:id", middleware.TokenValidator(), employeeController.GetEmployeeDocumentById)
 
 	api.Post("employee/employee-notification/get-by-employee-id", middleware.TokenValidator(), employeeNotifcationController.GetByEmployeeId)
 
